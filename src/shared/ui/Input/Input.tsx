@@ -1,9 +1,21 @@
 import cls from "./Input.module.scss";
 import { classNames } from "shared/utils/classNames/classNames";
-interface InputProps {
-  className?: string;
-}
+import { InputProps } from "./types";
 
-export const Input = ({ className }: InputProps) => {
-  return <div className={classNames(cls.Input, {}, [])}></div>;
+export const Input = ({
+  className,
+  onChange,
+  value,
+  ...restProps
+}: InputProps) => {
+  const handleChange = (e: any) => {
+    onChange(e.target.value);
+  };
+  return (
+    <input
+      {...restProps}
+      onChange={handleChange}
+      className={classNames(cls.Input, {}, [className])}
+    />
+  );
 };

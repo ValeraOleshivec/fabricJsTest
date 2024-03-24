@@ -1,5 +1,33 @@
-.sidebar{
+// Стили написаны без адаптива под Safari, при написании есть особенность что gap при использовании flex не работает
+// и желательно использовать Grid
+
+.Sidebar{
+  display: flex;
+  flex-direction: column;
   width: 400px;
   height: 100vh;
   background-color: black;
+  border-right: 1px solid orange;
+  gap:40px;
+  .changeSizeZone{
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap:10px;
+  }
+  .addSvgZone{
+    background-color: white;
+    display: grid;
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-width: 400px;
+    padding: 10px;
+    grid-template-columns: repeat(3, 80px);
+    grid-template-rows: 1fr;
+    grid-column-gap: 50px;
+
+  }
 }
