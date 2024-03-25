@@ -25,6 +25,7 @@ const CanvasProvider = ({ children }: { children: ReactNode }) => {
   const canvas = useRef<any>(null);
   const initCanvas = (): Canvas =>
     new fabric.Canvas("canvas", {
+      preserveObjectStacking: true,
       backgroundColor: "pink",
       width: canvasSizes.width,
       height: canvasSizes.height,

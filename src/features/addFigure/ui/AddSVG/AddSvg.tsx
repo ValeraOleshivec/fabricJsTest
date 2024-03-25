@@ -12,27 +12,14 @@ export const AddSvg = ({ className }: AddSvgProps) => {
   const { canvas } = useContext(CanvasContext);
 
   const handleAddSvgFigure = useCallback((url: string) => {
-    const initedCanvas: Canvas = canvas.current;
     fabric.loadSVGFromURL(url, (objects, options) => {
-      console.log(options);
       const svg = fabric.util.groupSVGElements(objects, options);
       svg.hasControls = true;
       svg.selectable = true;
       canvas.current.add(svg);
       canvas.current.renderAll();
-      initedCanvas.on("mouse:down", () => console.log("нажал"));
       svg.setCoords();
     });
-  }, []);
-  useEffect(() => {
-    fabric.loadSVGFromURL(
-      "http://fabricjs.com/assets/2.svg",
-      (objects, options) => {
-        const svg = fabric.util.groupSVGElements(objects, options);
-        canvas.current.add(svg);
-        canvas.current.renderAll();
-      },
-    );
   }, []);
   return (
     <div className={className}>

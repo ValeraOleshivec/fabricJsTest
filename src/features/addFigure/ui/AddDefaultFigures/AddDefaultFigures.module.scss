@@ -1,0 +1,9 @@
+.defaultFigures{
+  justify-content: center;
+  display: grid;
+  grid-row-gap: 20px;
+  .textInput {
+    display: flex;
+    gap:20px
+  }
+}

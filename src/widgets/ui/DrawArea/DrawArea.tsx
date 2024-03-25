@@ -1,6 +1,6 @@
 import styles from "./DrawArea.module.scss";
 import { fabric } from "fabric";
-import { useCallback, useContext, useEffect } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { Canvas } from "fabric/fabric-impl";
 import { CanvasContext } from "app/Providers/CanvasProvider";
 
@@ -9,35 +9,34 @@ export const DrawArea = () => {
     canvasSizes: { width, height },
     canvas,
   } = useContext(CanvasContext);
-  const loadImage = useCallback(() => {
-    const initedCanvas = canvas.current;
-    const group: any[] = [];
-    fabric.loadSVGFromURL(
-      `http://fabricjs.com/assets/2.svg`,
-      (objects, options) => {
-        const loadedObject = new fabric.Group(group);
+  const [selectedObjects, setSelectedObject] = useState<fabric.Object[]>([]);
 
-        initedCanvas.add?.(loadedObject);
-        initedCanvas.requestRenderAll();
-      },
-      (item: any, object: any) => {
-        object.set("id", item.getAttribute("id"));
-        group.push(object);
-      },
-    );
+  useEffect(() => {
+    const initedCanvas = canvas.current;
+    if (!initedCanvas.backgroundColor) return;
+    const bindEvents = (canvas: fabric.Canvas) => {
+      initedCanvas.on("selection:cleared", () => {
+        setSelectedObject([]);
+      });
+      initedCanvas.on("selection:created", (e: any) => {
+        console.log(e);
+        setSelectedObject(e.selected);
+      });
+      initedCanvas.on("selection:updated", (e: any) => {
+        console.log(e);
+        setSelectedObject(e.selected);
+      });
+    };
+    if (initedCanvas) {
+      bindEvents(initedCanvas);
+    }
   }, [canvas]);
 
   useEffect(() => {
-    if (!canvas.current.backgroundColor) return;
+    if (!canvas.current.add?.()) return;
     const initedCanvas: Canvas = canvas.current;
     initedCanvas?.setDimensions?.({ width: width, height: height });
-    loadImage();
   }, [width, height]);
 
-  return (
-    <>
-      <canvas id="canvas" ref={canvas} className={styles.drawArea} />
-      <button onClick={() => loadImage()}>ТЕТСЫФТВ</button>
-    </>
-  );
+  return <canvas id="canvas" ref={canvas} className={styles.drawArea} />;
 };

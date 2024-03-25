@@ -9,7 +9,7 @@ export const Input = ({
   ...restProps
 }: InputProps) => {
   const handleChange = (e: any) => {
-    onChange(e.target.value);
+    onChange(e);
   };
   return (
     <input
