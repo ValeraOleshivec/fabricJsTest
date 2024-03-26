@@ -6,7 +6,6 @@ import { Canvas } from "fabric/fabric-impl";
 interface AddSvgProps {
   className?: string;
 }
-const defaultSvgCount = 15;
 
 export const AddSvg = ({ className }: AddSvgProps) => {
   const { canvas } = useContext(CanvasContext);

@@ -7,14 +7,13 @@ interface changeSIzeZoneProps {
 }
 
 export const ChangeSizeZone = ({ className }: changeSIzeZoneProps) => {
-  const { canvasSizes, setCanvasSizes } = useContext(CanvasContext);
+  const { setCanvasSizes } = useContext(CanvasContext);
   const handleChangeSize =
-    (type: any) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      setCanvasSizes((prev: any) => {
+    (type: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      setCanvasSizes((prev) => {
         return { ...prev, [type]: Number(e.target.value) };
       });
     };
-  console.log(canvasSizes);
 
   return (
     <div className={className}>

@@ -1,7 +1,7 @@
 import cls from "./AddCustomImage.module.scss";
 import { classNames } from "shared/utils/classNames/classNames";
 import { Input } from "shared/ui/Input";
-import { useContext, useState } from "react";
+import { ChangeEvent, useContext } from "react";
 import { fabric } from "fabric";
 import { CanvasContext } from "app/Providers/CanvasProvider";
 interface AddCustomImageProps {
@@ -10,7 +10,7 @@ interface AddCustomImageProps {
 
 export const AddCustomImage = ({ className }: AddCustomImageProps) => {
   const { canvas } = useContext(CanvasContext);
-  const handleLoadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleLoadImage = async (e: ChangeEvent<HTMLInputElement>) => {
     const fileType = e.target.files[0].type.split("/")[1];
     const url = URL.createObjectURL(e.target.files[0]);
     if (["jpg", "jpeg", "png"].includes(fileType)) {
@@ -21,7 +21,7 @@ export const AddCustomImage = ({ className }: AddCustomImageProps) => {
     }
   };
   return (
-    <div className={classNames(cls.AddCustomImage, {}, [])}>
+    <div className={classNames(cls.AddCustomImage, {}, [className])}>
       <p>Загрузите своё изображение в формате JPG,PNG</p>
       <Input type={"file"} onChange={handleLoadImage} />
     </div>

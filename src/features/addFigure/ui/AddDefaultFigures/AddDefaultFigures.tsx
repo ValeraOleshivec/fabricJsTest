@@ -1,6 +1,6 @@
 import { Button } from "shared/ui/Button";
 import { Input } from "shared/ui/Input";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CanvasContext } from "app/Providers/CanvasProvider";
 import { handleAddRectangle } from "../../utils/addRectangle";
 import { handleAddCircle } from "../../utils/addCircle";

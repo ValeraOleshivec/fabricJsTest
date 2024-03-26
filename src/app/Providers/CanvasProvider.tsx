@@ -1,28 +1,35 @@
-import {
+import React, {
   createContext,
   ReactNode,
-  useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
 import { Canvas } from "fabric/fabric-impl";
 import { fabric } from "fabric";
-const initialState = {
-  canvasSizes: {
-    width: window.innerWidth - 400,
-    height: window.innerHeight,
-  },
+type canvasSizes = {
+  width: number;
+  height: number;
 };
+interface ContextValue {
+  openModal: boolean;
+  canvasSizes: canvasSizes;
+  canvas: any;
+  setCanvasSizes: React.Dispatch<React.SetStateAction<canvasSizes>>;
+  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-export const CanvasContext = createContext<any>(null);
+export const CanvasContext = createContext<ContextValue | null>(null);
 
 const CanvasProvider = ({ children }: { children: ReactNode }) => {
-  const [canvasSizes, setCanvasSizes] = useState({
+  const [canvasSizes, setCanvasSizes] = useState<canvasSizes>({
     width: window.innerWidth - 400,
     height: window.innerHeight,
   });
+  const [openModal, setOpenModal] = useState<boolean>(false);
   const canvas = useRef<any>(null);
+
   const initCanvas = (): Canvas =>
     new fabric.Canvas("canvas", {
       preserveObjectStacking: true,
@@ -30,23 +37,22 @@ const CanvasProvider = ({ children }: { children: ReactNode }) => {
       width: canvasSizes.width,
       height: canvasSizes.height,
     });
-  useEffect(() => {
+  useLayoutEffect(() => {
     canvas.current = initCanvas();
-    // return () => canvas.current.dispose();
   }, []);
 
   const returnValue = useMemo(
     () => ({
+      openModal,
+      setOpenModal,
       canvasSizes,
       setCanvasSizes,
       canvas,
     }),
-    [canvasSizes, setCanvasSizes, canvas],
+    [canvasSizes, setCanvasSizes, canvas, openModal, setOpenModal],
   );
-  //TODO добавить типы
 
   return (
-    // @ts-ignore
     <CanvasContext.Provider value={returnValue}>
       {children}
     </CanvasContext.Provider>

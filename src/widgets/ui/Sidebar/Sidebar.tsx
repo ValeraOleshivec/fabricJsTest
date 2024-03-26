@@ -4,6 +4,8 @@ import { ChangeSizeZone } from "entities/changeSize/ui/ChangeSizeZone/ChangeSize
 import { AddSvg } from "features/addFigure/ui/AddSVG/AddSvg";
 import { AddDefaultFigures } from "features/addFigure/ui/AddDefaultFigures/AddDefaultFigures";
 import { AddCustomImage } from "features/addFigure/ui/AddCustomImage/AddCustomImage";
+import { ManageMenu } from "features/ManageMenu";
+
 interface SidebarProps {
   className?: string;
 }
@@ -15,6 +17,7 @@ export const Sidebar = ({ className }: SidebarProps) => {
       <AddSvg className={cls.addSvgZone} />
       <AddDefaultFigures />
       <AddCustomImage />
+      <ManageMenu />
     </div>
   );
 };
